@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wyszukiwarka - Stan Magazynowy</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f5f9; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        tr:nth-child(even) { background-color: #f8fafc; }
+        select { 
+            appearance: none; 
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%2364748b' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e"); 
+            background-repeat: no-repeat; 
+            background-position: right 1rem center; 
+            background-size: 1em; 
+        }
+    </style>
+</head>
+<body class="bg-slate-50 min-h-screen p-4 md:p-10 text-slate-800 font-sans">
+
+    <div class="max-w-[1600px] mx-auto">
+        
+        <div class="mb-8">
+            <h1 class="text-4xl font-black text-slate-900 tracking-tight mb-2">Wyszukiwarka Części</h1>
+            <p class="text-slate-500 font-medium uppercase tracking-widest text-[10px]">Filtracja Stanów • Kolor • Model</p>
+        </div>
+
+        <div class="bg-white p-6 rounded-[32px] shadow-xl shadow-slate-200/50 border border-slate-100 mb-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                
+                <div class="lg:col-span-2">
+                    <label class="block text-[10px] font-black text-slate-400 uppercase mb-2 ml-1">Szukaj (Symbol / Dowolna fraza)</label>
+                    <input type="text" id="searchInput" oninput="filterData()" 
+                        placeholder="Wpisz np. 'Eh-15' lub 'Agger'..." 
+                        class="w-full border-2 border-slate-50 bg-slate-50 p-4 rounded-2xl outline-none focus:ring-4 focus:ring-blue-500/10 focus:border-blue-500 focus:bg-white transition-all font-semibold shadow-inner">
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase mb-2 ml-1">Filtruj Kolor</label>
+                    <select id="colorFilter" onchange="filterData()" 
+                        class="w-full border-2 border-slate-50 bg-slate-50 p-4 rounded-2xl outline-none focus:border-blue-500 focus:bg-white transition-all font-bold text-slate-700 cursor-pointer">
+                        <option value="">Wszystkie kolory</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block text-[10px] font-black text-slate-400 uppercase mb-2 ml-1">Filtruj Model</label>
+                    <select id="modelFilter" onchange="filterData()" 
+                        class="w-full border-2 border-slate-50 bg-slate-50 p-4 rounded-2xl outline-none focus:border-blue-500 focus:bg-white transition-all font-bold text-slate-700 cursor-pointer">
+                        <option value="">Wszystkie modele</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-[40px] shadow-2xl shadow-slate-200/60 overflow-hidden border border-slate-100">
+            <div class="overflow-x-auto custom-scrollbar">
+                <table class="w-full text-left border-collapse">
+                    <thead>
+                        <tr id="tableHeader" class="bg-slate-50/80 border-b border-slate-100 text-[11px] uppercase font-black text-slate-400 tracking-widest">
+                            </tr>
+                    </thead>
+                    <tbody id="tableBody" class="divide-y divide-slate-50 text-sm font-medium">
+                        </tbody>
+                </table>
+            </div>
+
+            <div id="emptyState" class="hidden py-32 text-center text-slate-400 font-medium">
+                Nie znaleziono pozycji spełniających kryteria.
+            </div>
+        </div>
+
+        <div class="mt-6 flex justify-between items-center px-6">
+            <div id="statusInfo" class="text-[10px] font-black text-slate-400 uppercase tracking-widest bg-slate-100 px-4 py-2 rounded-full">
+                Wczytywanie...
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const CSV_FILES = ['drobnica.csv', 'WKartonach.csv', 'zbiorcza_sciany.csv'];
+        let combinedData = [];
+        let uniqueHeaders = new Set();
+
+        async function init() {
+            try {
+                const results = await Promise.all(CSV_FILES.map(async file => {
+                    const res = await fetch(file + '?v=' + Date.now());
+                    if (!res.ok) return null;
+                    const text = await res.text();
+                    return { fileName: file, content: parseCSV(text, file) };
+                }));
+
+                results.forEach(res => { if (res) combinedData = combinedData.concat(res.content); });
+
+                combinedData.forEach(row => {
+                    Object.keys(row).forEach(key => { if (key !== "_source") uniqueHeaders.add(key); });
+                });
+
+                populateSelects();
+                renderHeader();
+                renderTable(combinedData);
+                document.getElementById('statusInfo').innerText = `Baza: ${combinedData.length} pozycji`;
+            } catch (err) { document.getElementById('statusInfo').innerText = "BŁĄD DANYCH"; }
+        }
+
+        function parseCSV(text, fileName) {
+            const lines = text.split(/\r?\n/).filter(l => l.trim() !== "");
+            const headers = lines[0].split(';').map(h => h.trim());
+            return lines.slice(1).map(line => {
+                const values = line.split(';').map(v => v.trim());
+                let obj = { "_source": fileName };
+                headers.forEach((h, i) => { if (h) obj[h] = values[i] || ""; });
+                return obj;
+            });
+        }
+
+        function populateSelects() {
+            const cSel = document.getElementById('colorFilter'), mSel = document.getElementById('modelFilter');
+            [...new Set(combinedData.map(i => i.Kolor).filter(Boolean))].sort().forEach(c => cSel.innerHTML += `<option value="${c}">${c}</option>`);
+            [...new Set(combinedData.map(i => i.Model).filter(Boolean))].sort().forEach(m => mSel.innerHTML += `<option value="${m}">${m}</option>`);
+        }
+
+        function renderHeader() {
+            const row = document.getElementById('tableHeader');
+            let html = `<th class="p-6 bg-slate-100/50 text-blue-600 w-32">Źródło</th>`;
+            const main = ['Symbol', 'Ilość', 'Kolor', 'Model', 'Lokalizacja'];
+            main.forEach(c => { if (uniqueHeaders.has(c)) html += `<th class="p-6 text-slate-900 font-black">${c.toUpperCase()}</th>`; });
+            uniqueHeaders.forEach(h => { if (!main.includes(h)) html += `<th class="p-6">${h.toUpperCase()}</th>`; });
+            row.innerHTML = html;
+        }
+
+        function renderTable(data) {
+            const tbody = document.getElementById('tableBody'), empty = document.getElementById('emptyState');
+            if (data.length === 0) { tbody.innerHTML = ""; empty.classList.remove('hidden'); return; }
+            empty.classList.add('hidden');
+
+            const main = ['Symbol', 'Ilość', 'Kolor', 'Model', 'Lokalizacja'];
+
+            tbody.innerHTML = data.map(row => {
+                let html = `<tr class="hover:bg-blue-50/40 transition-all border-b border-slate-50 last:border-none">`;
+                const src = row["_source"].replace('.csv', '').replace('zbiorcza_', '').toUpperCase();
+                html += `<td class="p-6"><span class="bg-slate-100 text-slate-400 px-3 py-1.5 rounded-lg text-[9px] font-black border border-slate-200">${src}</span></td>`;
+                
+                main.forEach(col => {
+                    if (uniqueHeaders.has(col)) {
+                        const val = row[col] || "";
+                        let style = "p-6 ";
+                        
+                        // WYRÓŻNIENIE WARTOŚCI 0
+                        if (col === 'Ilość' && (val === "0" || val === "0,00" || val === "")) {
+                            style += "text-red-600 font-black bg-red-50/50 ";
+                        } else if (col === 'Symbol') {
+                            style += "font-black text-slate-900 text-base ";
+                        } else if (col === 'Model') {
+                            style += "text-blue-600 font-bold ";
+                        }
+
+                        html += `<td class="${style}">${val || '<span class="text-slate-200">---</span>'}</td>`;
+                    }
+                });
+
+                uniqueHeaders.forEach(h => {
+                    if (!main.includes(h)) html += `<td class="p-6 text-slate-500">${row[h] || '---'}</td>`;
+                });
+                return html + `</tr>`;
+            }).join('');
+        }
+
+        function filterData() {
+            const s = document.getElementById('searchInput').value.toLowerCase();
+            const c = document.getElementById('colorFilter').value;
+            const m = document.getElementById('modelFilter').value;
+            const res = combinedData.filter(r => {
+                const matchS = Object.values(r).join(' ').toLowerCase().includes(s);
+                const matchC = c === "" || r.Kolor === c;
+                const matchM = m === "" || r.Model === m;
+                return matchS && matchC && matchM;
+            });
+            renderTable(res);
+            document.getElementById('statusInfo').innerText = `Wyników: ${res.length}`;
+        }
+
+        window.onload = init;
+    </script>
+</body>
+</html>
