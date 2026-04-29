@@ -1,57 +1,57 @@
-﻿Symbol;Ilość;Kolor
-As-A23;2;Antracyt
-As-B24;1;Antracyt
-Es-B11;6;Antracyt
-Es-B11c;1;Antracyt
-Es-A14b;1;Antracyt
-Es-A7;3;Antracyt
-Es-A7b;1;Antracyt
-T-14;7;Antracyt
-T-B7;2;Antracyt
-T-X24;3;Antracyt
-T-X24a;3;Antracyt
-T-X23;1;Antracyt
-T-X23a;1;Antracyt
-T-8;4;Antracyt
-Eh-G30;2;Antracyt
-Eh-G35;1;Antracyt
-Eh-A35;1;Antracyt
-Eh-A30;1;Antracyt
-T-B30;1;Antracyt
-Es-B11;7;Wood
-Es-B11b;3;Wood
-Es-B11c;1;Wood
-Es-A14 ;4;Wood
-Es-A14b;2;Wood
-Es-A7;3;Wood
-Es-A7b;2;Wood
-As-B24;6;Wood
-Lj-4;1;Wood
-Lj-4a;1;Wood
-Lj-6;3;Wood
-Lj-7;3;Wood
-Lj-15;1;Wood
-Lj-15a;1;Wood
-Lj-C16;1;Wood
-Lj-C22;2;Wood
-Lj-C23a;2;Wood
-XLJ-C12;1;Wood
-XLJ-C12a;1;Wood
-Eh-A30;1;Wood
-Eh-A35;1;Wood
-Es-E11;15;Silver
-Es-E11a;4;Silver
-Es-E11b;3;Silver
-Es-E11c;1;Silver
-Es-G14;8;Silver
-Es-G14a;2;Silver
-Es-G7;8;Silver
-Es-G7a;2;Silver
-Es-G7b;2;Silver
-Es-G14b;2;Silver
-As-F23;4;Silver
-As-F24;12;Silver
-As-F25;4;Silver
-ES-G30;1;Silver
-Es-G35;1;Silver
-DPRS;1;Green
+﻿Symbol;Ilość;Kolor;Lokalizacja
+As-A23;2;Antracyt;Zbiorcza - ściany
+As-B24;1;Antracyt;Zbiorcza - ściany
+Es-B11;6;Antracyt;Zbiorcza - ściany
+Es-B11c;1;Antracyt;Zbiorcza - ściany
+Es-A14b;1;Antracyt;Zbiorcza - ściany
+Es-A7;3;Antracyt;Zbiorcza - ściany
+Es-A7b;1;Antracyt;Zbiorcza - ściany
+T-14;7;Antracyt;Zbiorcza - ściany
+T-B7;2;Antracyt;Zbiorcza - ściany
+T-X24;3;Antracyt;Zbiorcza - ściany
+T-X24a;3;Antracyt;Zbiorcza - ściany
+T-X23;1;Antracyt;Zbiorcza - ściany
+T-X23a;1;Antracyt;Zbiorcza - ściany
+T-8;4;Antracyt;Zbiorcza - ściany
+Eh-G30;2;Antracyt;Zbiorcza - ściany
+Eh-G35;1;Antracyt;Zbiorcza - ściany
+Eh-A35;1;Antracyt;Zbiorcza - ściany
+Eh-A30;1;Antracyt;Zbiorcza - ściany
+T-B30;1;Antracyt;Zbiorcza - ściany
+Es-B11;7;Wood;Zbiorcza - ściany
+Es-B11b;3;Wood;Zbiorcza - ściany
+Es-B11c;1;Wood;Zbiorcza - ściany
+Es-A14 ;4;Wood;Zbiorcza - ściany
+Es-A14b;2;Wood;Zbiorcza - ściany
+Es-A7;3;Wood;Zbiorcza - ściany
+Es-A7b;2;Wood;Zbiorcza - ściany
+As-B24;6;Wood;Zbiorcza - ściany
+Lj-4;1;Wood;Zbiorcza - ściany
+Lj-4a;1;Wood;Zbiorcza - ściany
+Lj-6;3;Wood;Zbiorcza - ściany
+Lj-7;3;Wood;Zbiorcza - ściany
+Lj-15;1;Wood;Zbiorcza - ściany
+Lj-15a;1;Wood;Zbiorcza - ściany
+Lj-C16;1;Wood;Zbiorcza - ściany
+Lj-C22;2;Wood;Zbiorcza - ściany
+Lj-C23a;2;Wood;Zbiorcza - ściany
+XLJ-C12;1;Wood;Zbiorcza - ściany
+XLJ-C12a;1;Wood;Zbiorcza - ściany
+Eh-A30;1;Wood;Zbiorcza - ściany
+Eh-A35;1;Wood;Zbiorcza - ściany
+Es-E11;15;Silver;Zbiorcza - ściany
+Es-E11a;4;Silver;Zbiorcza - ściany
+Es-E11b;3;Silver;Zbiorcza - ściany
+Es-E11c;1;Silver;Zbiorcza - ściany
+Es-G14;8;Silver;Zbiorcza - ściany
+Es-G14a;2;Silver;Zbiorcza - ściany
+Es-G7;8;Silver;Zbiorcza - ściany
+Es-G7a;2;Silver;Zbiorcza - ściany
+Es-G7b;2;Silverv;Zbiorcza - ściany
+Es-G14b;2;Silver;Zbiorcza - ściany
+As-F23;4;Silver;Zbiorcza - ściany
+As-F24;12;Silver;Zbiorcza - ściany
+As-F25;4;Silver;Zbiorcza - ściany
+ES-G30;1;Silver;Zbiorcza - ściany
+Es-G35;1;Silver;Zbiorcza - ściany
+DPRS;1;Green;Zbiorcza - ściany
