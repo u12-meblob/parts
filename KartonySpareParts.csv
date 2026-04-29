@@ -1,12 +1,12 @@
-Symbol;Kolor;Ilość
-T-P7;Uniwersalny;10
-As-H52;Uniwersalny;2
-AsH52a;Uniwersalny;2
-T-P5A;Antracyt;72
-T-P5A;Brown;60
-T-P3;Brown;10
-T-P2;Antracyt;10
-T-P1;Antracyt;10
-T-P6;Brown;10
-Bs-A11;Uniwersalny;1
-Bs-A12;Uniwersalny;1
+Symbol;Kolor;Ilość;Lokalizacja
+T-P7;Uniwersalny;10;Kartony ze spare parts
+As-H52;Uniwersalny;2;Kartony ze spare parts
+AsH52a;Uniwersalny;2;Kartony ze spare parts
+T-P5A;Antracyt;72;Kartony ze spare parts
+T-P5A;Brown;60;Kartony ze spare parts
+T-P3;Brown;10;Kartony ze spare parts
+T-P2;Antracyt;10;Kartony ze spare parts
+T-P1;Antracyt;10;Kartony ze spare parts
+T-P6;Brown;10;Kartony ze spare parts
+Bs-A11;Uniwersalny;1;Kartony ze spare parts
+Bs-A12;Uniwersalny;1;Kartony ze spare parts
